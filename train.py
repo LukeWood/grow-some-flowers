@@ -10,11 +10,6 @@ from tensorflow import keras
 
 flags.DEFINE_string("artifacts_dir", None, "artifact save dir")
 flags.DEFINE_string("model_dir", None, "directory to save model to")
-flags.DEFINE_string(
-    "checkpoint_path",
-    "artifacts/checkpoint/diffusion_model",
-    "model checkpoint directory",
-)
 flags.DEFINE_float("percent", 100, "percentage of dataset to use")
 flags.DEFINE_integer("epochs", 100, "epochs to train for")
 flags.DEFINE_boolean(
@@ -95,14 +90,6 @@ def main(args):
     )
 
     # save the best model based on the validation KID metric
-    checkpoint_path = FLAGS.checkpoint_path
-    checkpoint_callback = tf.keras.callbacks.ModelCheckpoint(
-        filepath=checkpoint_path,
-        save_weights_only=True,
-        monitor="loss",
-        mode="min",
-        save_best_only=True,
-    )
 
     # calculate mean and variance of training dataset for normalization
     model.normalizer.adapt(train_dataset)
@@ -114,12 +101,11 @@ def main(args):
         # validation_data=val_dataset,
         callbacks=[
             visualiation_lib.SaveVisualOfSameNoiseEveryEpoch(
-                model=model, save_path=f"{artifacts_dir}/same-noise"
+                model=model, rows=50, cols=20, save_path=f"{artifacts_dir}/same-noise"
             ),
             visualiation_lib.SaveRandomNoiseImages(
                 model=model, save_path=f"{artifacts_dir}/random"
             ),
-            checkpoint_callback,
         ],
     )
 
