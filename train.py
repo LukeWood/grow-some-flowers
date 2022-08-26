@@ -19,8 +19,7 @@ FLAGS = flags.FLAGS
 
 
 dataset_name = "oxford_flowers102"
-dataset_repetitions = 5
-num_epochs = 50  # train for at least 50 epochs for good results
+num_epochs = 300 # train for at least 50 epochs for good results
 image_size = 64
 # KID = Kernel Inception Distance, see related section
 kid_image_size = 75
@@ -70,7 +69,6 @@ def prepare_dataset(split):
         tfds.load(dataset_name, split=split, shuffle_files=True)
         .map(preprocess_image, num_parallel_calls=tf.data.AUTOTUNE)
         .cache()
-        .repeat(dataset_repetitions)
         .shuffle(10 * batch_size)
         .batch(batch_size, drop_remainder=True)
         .prefetch(buffer_size=tf.data.AUTOTUNE)
@@ -101,7 +99,7 @@ def main(args):
         # validation_data=val_dataset,
         callbacks=[
             visualiation_lib.SaveVisualOfSameNoiseEveryEpoch(
-                model=model, rows=50, cols=20, save_path=f"{artifacts_dir}/same-noise"
+                model=model, rows=4, cols=6,save_path=f"{artifacts_dir}/same-noise"
             ),
             visualiation_lib.SaveRandomNoiseImages(
                 model=model, save_path=f"{artifacts_dir}/random"
