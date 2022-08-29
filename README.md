@@ -12,7 +12,7 @@ Do you want to grow the flowers yourself, but don't know where to start the proc
 
 *This flow chart will help you get started.*
 
-<img width="400px" src="media/flowchart.png">
+<img width="400px" src="media/flowchart-should-you-use.png">
 
 ## Usage
 
