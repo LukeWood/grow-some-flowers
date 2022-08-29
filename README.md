@@ -29,3 +29,7 @@ Then:
 ```
 
 In 2022, that's all it takes to grow flowers.
+
+### References
+
+[Denoising Diffusion Implicit Models](https://keras.io/examples/generative/ddim)
